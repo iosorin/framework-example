@@ -63,7 +63,7 @@ export function createTable(rowsCount = 30) {
         rows.push(newCol);
     }
 
-    // Create ABC-Layout and move it up
+    // Create ABC-Layout and move it up.
     rows.push(createRow({ content: cols }));
     rows.unshift(rows.pop());
 
