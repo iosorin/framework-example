@@ -12,7 +12,7 @@ export class Excel {
         const $root = $.create('div', 'excel');
 
         // Waklhrough all passed components
-        this.components.forEach((Component) => {
+        this.components = this.components.map((Component) => {
             // Create El instance with a passed static className
             const $el = $.create('div', Component.className);
 
@@ -24,6 +24,8 @@ export class Excel {
 
             // Add self to root element
             $root.append($el);
+
+            return component;
         });
 
         return $root;
@@ -33,5 +35,7 @@ export class Excel {
         const $root = this.getRoot();
 
         this.$el.append($root);
+
+        this.components.forEach(component => component.init());
     }
 }
