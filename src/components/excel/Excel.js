@@ -1,24 +1,37 @@
+import { $ } from '@core/dom';
+
 export class Excel {
     constructor(selector, options) {
-        this.$el = document.querySelector(selector);
+        this.$el = $(selector);
 
         this.components = options.components || [];
     }
 
     getRoot() {
-        const $root = document.createElement('div');
+        // Create root Dom instancte
+        const $root = $.create('div', 'excel');
 
+        // Waklhrough all passed components
         this.components.forEach((Component) => {
-            const component = new Component();
-            const html = component.toHtml();
+            // Create El instance with a passed static className
+            const $el = $.create('div', Component.className);
 
-            $root.insertAdjacentHTML('beforeend', html);
+            // Pass it to DomListener constructor
+            const component = new Component($el);
+
+            // Append component inner html
+            $el.html(component.toHtml());
+
+            // Add self to root element
+            $root.append($el);
         });
 
         return $root;
     }
 
     render() {
-        this.$el.append(this.getRoot());
+        const $root = this.getRoot();
+
+        this.$el.append($root);
     }
 }
