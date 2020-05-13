@@ -13,14 +13,21 @@ function createColumn(col = '') {
     return `
         <div class="column">
             ${ col }
+
+            <div class="col-resize" data-resize="col"></div>
         </div>
     `;
 }
 
 function createRow({ int = '', content = '' } = { }) {
+    const resizer = int ? '<div class="row-resize" data-resize="row"></div>' : '';
+
     return `
         <div class="row">
-            <div class="row-info">${ int }</div>
+            <div class="row-info">
+                ${ int }
+                ${ resizer }
+            </div>
             <div class="row-data">${ content }</div>
         </div>
     `;

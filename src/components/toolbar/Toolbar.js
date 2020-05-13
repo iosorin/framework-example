@@ -5,16 +5,12 @@ export class Toolbar extends ExcelComponent {
 
     constructor($root) {
         const name = 'Toolbar';
-        const listeners = ['click'];
+        const listeners = [];
 
         super($root, {
             name,
             listeners
         });
-    }
-
-    onClick(evt) {
-        console.log('Formula: onClick', evt.target, this.$root);
     }
 
     toHtml() {
