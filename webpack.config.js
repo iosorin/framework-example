@@ -1,20 +1,35 @@
-const path = require("path");
+const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const isProd = process.env.NODE_ENV === "production";
+const isProd = process.env.NODE_ENV === 'production';
 const isDev = !isProd;
 
 const filename = ext => isDev ? `bundle.${ext}` : `bundle.[hash].${ext}`;
 
+const jsLoaders = () => {
+    const loaders = [{
+        loader: 'babel-loader',
+        options: {
+            presets: ['@babel/preset-env']
+        }
+    }];
+
+    if (isDev) {
+        loaders.push('eslint-loader');
+    }
+
+    return loaders;
+};
+
 module.exports = {
-    context: path.resolve(__dirname, "src"),
-    mode: "development",
+    context: path.resolve(__dirname, 'src'),
+    mode: 'development',
     entry: [
-        "@babel/polyfill",
-        "./index.js"
+        '@babel/polyfill',
+        './index.js'
     ],
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -35,17 +50,17 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new HTMLWebpackPlugin({
-            template: "index.html",
+            template: 'index.html',
             minify: {
                 collapseWhitespace: isProd,
-                removeComments: isProd,
+                removeComments: isProd
             }
         }),
         new CopyPlugin([
             {
                 from: path.relative(__dirname, 'src/favicon.ico'),
                 to: path.relative(__dirname, 'dist')
-            },
+            }
         ]),
         new MiniCssExtractPlugin({
             filename: filename('css')
@@ -65,18 +80,13 @@ module.exports = {
                     },
                     'css-loader',
                     'sass-loader'
-                ],
+                ]
             },
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: {
-                    loader: "babel-loader",
-                    options: {
-                        presets: ["@babel/preset-env"]
-                    }
-                }
+                use: jsLoaders()
             }
-        ],
-    },
-}
+        ]
+    }
+};

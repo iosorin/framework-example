@@ -1,0 +1,71 @@
+{
+    "parser": "babel-eslint",
+    "env": {
+        "es6": true,
+        "browser": true,
+        "node": true
+    },
+    "rules": {
+        "consistent-return": 0,
+        "no-param-reassign": 0,
+        "no-return-assign": 0,
+        "no-multi-assign": 0,
+        "import/no-unresolved": 0,
+        "no-tabs": 0,
+        "linebreak-style": 0,
+        "import/no-unassigned-import": 0,
+        "no-underscore-dangle": 0,
+        "import/no-extraneous-dependencies": 0,
+        "no-unused-expressions": 0,
+        "max-len": 0,
+        "no-console": "off",
+        "import/prefer-default-export": 0,
+        "require-jsdoc": 0,
+        "indent": [
+            2,
+            4,
+            {
+                "ignoredNodes": [
+                    "TemplateLiteral"
+                ],
+                "SwitchCase": 1
+            }
+        ],
+        "quotes": [
+            2,
+            "single"
+        ],
+        "semi": [
+            2,
+            "always"
+        ],
+        "object-curly-spacing": [
+            "error",
+            "always"
+        ],
+        "brace-style": [
+            "error",
+            "stroustrup"
+        ],
+        "comma-dangle": [
+            "error",
+            "never"
+        ],
+        // '===' instead of '==' rule
+        "eqeqeq": [
+            2,
+            "allow-null"
+        ],
+        "arrow-parens": [
+            "error",
+            "as-needed",
+            {
+                "requireForBlockBody": true
+            }
+        ]
+    },
+    "extends": [
+        "eslint:recommended",
+        "google"
+    ]
+}
