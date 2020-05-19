@@ -20,7 +20,9 @@ export class DomListener {
 
             // Method is not implemented
             if (!this[method]) {
-                throw new Error(`Method ${ method } is not implemented in ${ this.name } Component`);
+                console.warn(`DEV Warn: Method ${ method } is not implemented in ${ this.name } Component`);
+
+                return;
             }
 
             // Bind context in this way so that you can actually REMOVE event listener later
