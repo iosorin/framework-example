@@ -16,10 +16,47 @@ class Dom {
         return this.$el.outerHTML.trim();
     }
 
+    get data() {
+        return this.$el.dataset;
+    }
+
     clear() {
         this.html('');
 
         return this;
+    }
+
+    closest(selector) {
+        return $(this.$el.closest(selector));
+    }
+
+    coords() {
+        return this.$el.getBoundingClientRect();
+    }
+
+    findAll(selector) {
+        const elements = Array.from(this.$el.querySelectorAll(selector));
+
+        return elements.map(el => $(el));
+    }
+
+    toggleClass(classList, add = true) {
+        const action = add ? 'add' : 'remove';
+
+        this.$el.classList[action](classList);
+    }
+
+    /**
+     * @param {object} styles
+     * {
+     *    width: '10px',
+     *    height: '20px'
+     * }
+     **/
+    css(styles = {}) {
+        Object
+            .keys(styles)
+            .forEach(name => this.$el.style[name] = styles[name]);
     }
 
     append(node) {
