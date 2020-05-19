@@ -15,8 +15,6 @@ export class Table extends ExcelComponent {
             name,
             listeners
         });
-
-        this.canResize = true;
     }
 
     toHtml() {
