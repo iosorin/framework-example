@@ -9,6 +9,11 @@
     overflow-x: auto;
     padding-bottom: 2px;
 
+    &.on-resize {
+        cursor: default;
+        user-select: none;
+    }
+
     .row {
         display: flex;
         flex-direction: row;
@@ -72,9 +77,10 @@
         right: 0;
         background: $primary;
         opacity: 0;
-        transition: 0.1s;
+        z-index: 1;
 
-        &:hover {
+        &:hover,
+        &:active {
             opacity: 1;
         }
     }

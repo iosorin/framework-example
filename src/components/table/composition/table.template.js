@@ -3,76 +3,59 @@ const CODES = {
     Z: 90
 };
 
-function createCell(cel = '') {
+function toCell(_, col) {
     return `
-        <div class="cell" contenteditable="">${ cel }</div>
+        <div class="cell" data-col="${col}" contenteditable></div>
     `;
 }
 
-function createColumn(col = '') {
+function toColumn(col, index) {
     return `
-        <div class="column">
-            ${ col }
-
+        <div class="column" data-type="resizable" data-col="${ index }">
+            ${col}
             <div class="col-resize" data-resize="col"></div>
         </div>
     `;
 }
 
-function createRow({ int = '', content = '' } = { }) {
-    const resizer = int ? '<div class="row-resize" data-resize="row"></div>' : '';
+function createRow(index, content) {
+    const resize = index ? '<div class="row-resize" data-resize="row"></div>' : '';
 
     return `
-        <div class="row">
+        <div class="row" data-row="${index}" data-type="resizable">
             <div class="row-info">
-                ${ int }
-                ${ resizer }
+                ${index ? index : ''}
+                ${resize}
             </div>
-            <div class="row-data">${ content }</div>
+            <div class="row-data">${content}</div>
         </div>
     `;
 }
 
-function toChar(int) {
-    return String.fromCharCode(CODES.A + int);
+function toChar(_, index) {
+    return String.fromCharCode(CODES.A + index);
 }
 
-export function createTable(rowsCount = 30) {
-    const colsCount = CODES.Z - CODES.A;
-
-    let cols = [];
-    let cells = [];
-
+export function create(rowsCount = 15) {
+    const colsCount = CODES.Z - CODES.A + 1;
     const rows = [];
 
-    for (let r = 0; r < rowsCount + 1; r++) {
-        cols = [];
-        cells = [];
+    const cols = new Array(colsCount)
+        .fill('')
+        .map(toChar)
+        .map(toColumn)
+        .join('');
 
-        for (let c = 0; c <= colsCount; c++) {
-            const char = toChar(c);
+    rows.push(createRow(null, cols));
 
-            const col = createColumn(char);
-            const cell = createCell(); // String(char) + r
+    for (let i = 0; i < rowsCount; i++) {
+        const cells = new Array(colsCount)
+            .fill('')
+            .map(toCell)
+            .join('');
 
-            cols.push(col);
-            cells.push(cell);
-        }
-
-        cols = cols.join('');
-        cells = cells.join('');
-
-        const newCol = createRow({
-            int: r,
-            content: cells
-        });
-
-        rows.push(newCol);
+        rows.push(createRow(i + 1, cells));
     }
-
-    // Create ABC-Layout and move it up.
-    rows.push(createRow({ content: cols }));
-    rows.unshift(rows.pop());
 
     return rows.join('');
 }
