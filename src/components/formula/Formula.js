@@ -7,10 +7,12 @@ export class Formula extends ExcelComponent {
     constructor($root, options) {
         const name = 'Formula';
         const listeners = ['input', 'keydown'];
+        const storeSubscribes = ['currentText'];
 
         super($root, {
             name,
             listeners,
+            storeSubscribes,
             ...options
         });
 
@@ -22,10 +24,6 @@ export class Formula extends ExcelComponent {
 
         this.$formula = this.$root.find('#formula');
 
-        this.subscribe();
-    }
-
-    subscribe() {
         this.$on('table:select', (text) => {
             this.$formula.text(text);
         });
@@ -33,11 +31,10 @@ export class Formula extends ExcelComponent {
         this.$on('table:input', (text) => {
             this.$formula.text(text);
         });
+    }
 
-        // this.$subscribe((state) => {
-        //     console.log('FORMULA UPDATE', state.currentText);
-        //     this.$formula.text(state.currentText);
-        // });
+    storeChanged(data) {
+        console.log('FORMULA STORE CHANGES', data);
     }
 
     onInput(e) {

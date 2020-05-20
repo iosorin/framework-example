@@ -7,6 +7,7 @@ export class ExcelComponent extends DomListener {
         this.name = options.name || '';
 
         this.$store = options.store;
+        this.storeSubscribes = options.storeSubscribes || [];
 
         this.emmiter = options.emmiter;
         this.unsubscribers = [];
@@ -14,12 +15,7 @@ export class ExcelComponent extends DomListener {
         this.onBeforeInit();
     }
 
-    // Возвращает шаблон компонента
-    toHtml() {
-        return '';
-    }
-
-    // EVENTS ========================================
+    // EMIT-EVENTS ========================================
     $emit(event, ...args) {
         // Notify listeners about event "event"
         this.emmiter.emit(event, ...args);
@@ -37,20 +33,31 @@ export class ExcelComponent extends DomListener {
         this.$store.dispatch(action);
     }
 
-    // Lifecycle hook
+    // Pass only watched properties changes
+    storeChanged() {
+    }
+
+    isWatching(key) {
+        return this.storeSubscribes.includes(key);
+    }
+
+    // LIFECYCLES ========================================
     onBeforeInit() { }
 
 
-    // Lifecycle hook - init dom listeners
     init() {
         this.initDOMListeners();
     }
 
-    // Lifecycle hook - remove dom listeners
     destroy() {
         this.removeDOMListeners();
 
         // Events off
         this.unsubscribers.forEach(unsub => unsub());
+    }
+
+    // Component Template
+    toHtml() {
+        return '';
     }
 }
