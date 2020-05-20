@@ -7,6 +7,19 @@ const capitalize = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
+function storage(key, data = null) {
+    // set
+    if (data) {
+        localStorage.setItem(key, JSON.stringify(data));
+
+        return;
+    }
+
+    // get
+    return JSON.parse(localStorage.getItem(key));
+}
+
 export {
-    capitalize
+    capitalize,
+    storage
 };

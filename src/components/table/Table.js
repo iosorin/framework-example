@@ -1,11 +1,13 @@
 import { $ } from '@core/dom';
+
 import { ExcelComponent } from '@core/ExcelComponent';
+import { TableSelection } from './TableSelection';
 
 import { utils } from './composition/table.utils';
 import { create } from './composition/table.template';
 import { resize } from './composition/table.resize';
 
-import { TableSelection } from './TableSelection';
+import * as actions from '@store/actions';
 
 export class Table extends ExcelComponent {
     static className = 'excel__table';
@@ -43,7 +45,7 @@ export class Table extends ExcelComponent {
         });
 
         // Store
-        this.$subscribe(state => console.log('Table state', state));
+        // this.$subscribe(state => console.log('Table state', state));
     }
 
     selectCell($el) {
@@ -52,9 +54,21 @@ export class Table extends ExcelComponent {
         this.$emit('table:select', $el.text());
     }
 
+
+    async resizeTable(event) {
+        try {
+            const data = await resize(this.$root, event);
+
+            this.$dispatch(actions.tableResize(data));
+        }
+        catch (e) {
+            console.warn('Resize error', e.message);
+        }
+    }
+
     onMousedown(e) {
         if (utils.shouldResize(e)) {
-            resize(this.$root, e);
+            this.resizeTable(e);
         }
         else if (utils.isCell(e)) {
             const $target = $(e.target);
@@ -100,6 +114,7 @@ export class Table extends ExcelComponent {
     }
 
     toHtml() {
-        return create(20);
+        const state = this.$store.getState();
+        return create(20, state);
     }
 }
