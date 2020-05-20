@@ -6,6 +6,10 @@ const CODES = {
 const DEFAULT_WIDTH = 100;
 const DEFAULT_HEIGHT = 24;
 
+function getData(state, id) {
+    return state[id] || '';
+}
+
 function getWidth(state, index) {
     return (state[index] || DEFAULT_WIDTH) + 'px';
 }
@@ -16,17 +20,20 @@ function getHeight(state, index) {
 
 function toCell(state, row) {
     return function(_, col) {
-        const width = getWidth(state, col);
+        const width = getWidth(state.colState, col);
+        const data = getData(state.dataState, `${row}:${col}`);
 
         return `
             <div
                 class="cell"
                 contenteditable
-                data-col="${col}"
-                data-id="${row}:${col}"
+                data-col="${ col }"
+                data-id="${ row }:${ col }"
                 data-type="cell"
-                style="width: ${width}"
-            ></div>
+                style="width: ${ width }"
+            >
+                ${ data }
+            </div>
         `;
     };
 }
@@ -37,9 +44,9 @@ function toColumn({ col, index, width } = {}) {
             class="column"
             data-type="resizable"
             data-col="${ index }"
-            style="width: ${width}"
+            style="width: ${ width }"
         >
-            ${col}
+            ${ col }
             <div class="col-resize" data-resize="col"></div>
         </div>
     `;
@@ -52,15 +59,15 @@ function createRow(index, content, state) {
     return `
         <div
             class="row"
-            data-row="${index}"
+            data-row="${ index }"
             data-type="resizable"
-            style="height: ${height}"
+            style="height: ${ height }"
         >
             <div class="row-info">
-                ${index ? index : ''}
-                ${resize}
+                ${ index || ''}
+                ${ resize }
             </div>
-            <div class="row-data">${content}</div>
+            <div class="row-data">${ content }</div>
         </div>
     `;
 }
@@ -97,7 +104,7 @@ export function create(rowsCount = 15, state = {}) {
     for (let row = 0; row < rowsCount; row++) {
         const cells = new Array(colsCount)
             .fill('')
-            .map(toCell(state.colState, row))
+            .map(toCell(state, row))
             .join('');
 
         rows.push(createRow(row + 1, cells, state.rowState));
