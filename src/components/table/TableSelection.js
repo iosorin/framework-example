@@ -27,4 +27,8 @@ export class TableSelection {
 
         this.group.forEach($el => $el.toggleClass(TableSelection.selectedClass, true));
     }
+
+    applyStyle({ key, value } = {}) {
+        this.group.forEach($el => $el.css({ [key]: value }));
+    }
 }
