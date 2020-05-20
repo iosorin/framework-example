@@ -8,7 +8,7 @@ import { create } from './composition/table.template';
 import { resize } from './composition/table.resize';
 
 import * as actions from '@store/actions';
-import { defaultStyles } from '../../constants';
+// import { defaultStyles } from '../../constants';
 
 export class Table extends ExcelComponent {
     static className = 'excel__table';
@@ -31,7 +31,6 @@ export class Table extends ExcelComponent {
     init() {
         super.init();
 
-        // Events
         this.$on('formula:input', (text) => {
             this.selection.current.text(text); // visual update
             this.updateTextInStore(text); // store update
@@ -53,8 +52,7 @@ export class Table extends ExcelComponent {
 
         this.$emit('table:select', $cell.text());
 
-        const styles = $cell.getStyle(Object.keys(defaultStyles));
-        console.log(styles);
+        // const styles = $cell.getStyle(Object.keys(defaultStyles));
     }
 
 
@@ -128,6 +126,7 @@ export class Table extends ExcelComponent {
 
     toHtml() {
         const state = this.$store.getState();
+
         return create(20, state);
     }
 }
