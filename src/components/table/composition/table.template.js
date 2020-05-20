@@ -21,7 +21,7 @@ function getHeight(state, index) {
 function toCell(state, row) {
     return function(_, col) {
         const width = getWidth(state.colState, col);
-        const data = getData(state.dataState, `${row}:${col}`);
+        const data = getData(state.dataState, `${ row }:${ col }`);
 
         return `
             <div

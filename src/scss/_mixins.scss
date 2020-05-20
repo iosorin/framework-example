@@ -6,9 +6,11 @@
     position: relative;
     display: inline-block;
     color: rgba(0, 0, 0, .7);
+    pointer-events: all;
 
     & i {
         font-size: 18px;
+        pointer-events: none;
     }
 
     &:active,

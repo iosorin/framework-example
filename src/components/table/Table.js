@@ -8,6 +8,7 @@ import { create } from './composition/table.template';
 import { resize } from './composition/table.resize';
 
 import * as actions from '@store/actions';
+import { defaultStyles } from '../../constants';
 
 export class Table extends ExcelComponent {
     static className = 'excel__table';
@@ -40,13 +41,20 @@ export class Table extends ExcelComponent {
             this.selection.current.focus();
         });
 
+        this.$on('toolbar:applyStyle', ({ key, value }) => {
+            this.selection.applyStyle({ key, value });
+        });
+
         this.selectCell(this.$root.find('.cell[data-id="0:0"]'));
     }
 
-    selectCell($el) {
-        this.selection.select($el);
+    selectCell($cell) {
+        this.selection.select($cell);
 
-        this.$emit('table:select', $el.text());
+        this.$emit('table:select', $cell.text());
+
+        const styles = $cell.getStyle(Object.keys(defaultStyles));
+        console.log(styles);
     }
 
 
@@ -84,7 +92,7 @@ export class Table extends ExcelComponent {
                 this.selection.selectGroup($cells);
             }
             else {
-                this.selection.select($target);
+                this.selectCell($target);
             }
         }
     }

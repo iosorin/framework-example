@@ -108,6 +108,14 @@ class Dom {
             .forEach(name => this.$el.style[name] = styles[name]);
     }
 
+    getStyle( styles = {} ) {
+        return styles.reduce((res, s) => {
+            res[s] = this.$el.style[s];
+
+            return res;
+        }, {});
+    }
+
     append(node) {
         if (node instanceof Dom) {
             node = node.$el;
