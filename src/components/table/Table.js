@@ -28,12 +28,12 @@ export class Table extends ExcelComponent {
     init() {
         super.init();
 
-        this.listenEvents();
+        this.subscribe();
         this.selectCell(this.$root.find('.cell[data-id="0:0"]'));
     }
 
-
-    listenEvents() {
+    subscribe() {
+        // Events
         this.$on('formula:input', (data) => {
             this.selection.current.text(data);
         });
@@ -41,6 +41,9 @@ export class Table extends ExcelComponent {
         this.$on('formula:done', () => {
             this.selection.current.focus();
         });
+
+        // Store
+        this.$subscribe(state => console.log('Table state', state));
     }
 
     selectCell($el) {
