@@ -1,4 +1,4 @@
-import { TABLE_RESIZE, CHANGE_TEXT } from './types';
+import { TABLE_RESIZE, CHANGE_TEXT, CHANGE_TITLE } from './types';
 
 // Pure Function - сохранение в localStorage будет side-эффектом
 export function rootReducer(state, action) {
@@ -25,6 +25,14 @@ export function rootReducer(state, action) {
                 ...state,
                 currentText: action.data.value,
                 dataState: prevState
+            };
+
+        case CHANGE_TITLE:
+            prevState = state['title'] || '';
+
+            return {
+                ...state,
+                title: action.data
             };
 
         default:
