@@ -2,7 +2,9 @@ import { storage } from '@core/utils';
 
 const defaultState = {
     rowState: {},
-    colState: {}
+    colState: {},
+    dataState: {},
+    currentText: ''
 };
 
 const storageState = storage('App-State');
