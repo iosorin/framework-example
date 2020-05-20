@@ -30,7 +30,7 @@ module.exports = {
     mode: 'development',
     entry: [
         '@babel/polyfill',
-        './index.js'
+        './app.js'
     ],
     output: {
         path: path.resolve(__dirname, 'dist'),

@@ -21,15 +21,15 @@ export class ExcelComponent extends DomListener {
     }
 
     // EVENTS ========================================
-    // Notify listeners about event "event"
     $emit(event, ...args) {
+        // Notify listeners about event "event"
         this.emmiter.emit(event, ...args);
     }
 
-    // Subsribe on event "event"
     $on(event, callback) {
         const unsubscribe = this.emmiter.on(event, callback);
 
+        // Subsribe on event "event"
         this.unsubscribers.push(unsubscribe);
     }
 
