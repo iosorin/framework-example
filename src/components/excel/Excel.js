@@ -5,8 +5,10 @@ export class Excel {
     constructor(selector, options) {
         this.$el = $(selector);
 
-        this.emmiter = new Emmiter();
+        this.store = options.store;
         this.components = options.components || [];
+
+        this.emmiter = new Emmiter();
     }
 
     getRoot() {
@@ -15,7 +17,8 @@ export class Excel {
 
         // Component options
         const options = {
-            emmiter: this.emmiter
+            emmiter: this.emmiter,
+            store: this.store
         };
 
         // Waklhrough all passed components

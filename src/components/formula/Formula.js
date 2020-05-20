@@ -22,10 +22,10 @@ export class Formula extends ExcelComponent {
 
         this.$formula = this.$root.find('#formula');
 
-        this.listenEvents();
+        this.subscribe();
     }
 
-    listenEvents() {
+    subscribe() {
         this.$on('table:select', (text) => {
             this.$formula.text(text);
         });
@@ -33,6 +33,8 @@ export class Formula extends ExcelComponent {
         this.$on('table:input', (text) => {
             this.$formula.text(text);
         });
+
+        this.$subscribe(state => console.log('Formula state', state));
     }
 
     onInput(e) {
