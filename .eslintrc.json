@@ -21,6 +21,7 @@
         "no-console": "off",
         "import/prefer-default-export": 0,
         "require-jsdoc": 0,
+        "no-unused-vars": 1,
         "indent": [
             2,
             4,
