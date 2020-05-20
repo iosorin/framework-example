@@ -3,18 +3,20 @@ import { ExcelComponent } from '@/core/ExcelComponent';
 export class Formula extends ExcelComponent {
     static className = 'excel__formula';
 
-    constructor($root) {
+    constructor($root, options) {
         const name = 'Formula';
         const listeners = ['input'];
 
         super($root, {
             name,
-            listeners
+            listeners,
+            ...options
         });
     }
 
     onInput(evt) {
-        console.log('Formula: onInput', evt.target.textContent, this.$root);
+        const text = evt.target.textContent.trim();
+        this.observer.emit('observer-test', text);
     }
 
     toHtml() {
