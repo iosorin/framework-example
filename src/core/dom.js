@@ -20,10 +20,33 @@ class Dom {
         return this.$el.dataset;
     }
 
+    id(parse) {
+        const { id } = this.data;
+
+        if (parse) {
+            const [row, col] = id.split(':');
+
+            return {
+                row: parseInt(row),
+                col: parseInt(col)
+            };
+        }
+
+        return id;
+    }
+
     clear() {
         this.html('');
 
         return this;
+    }
+
+    is(selector) {
+        if (selector) {
+            return this.$el.classList.contains(selector.replace('.', ''));
+        }
+
+        return this.$el.tagName.toLowerCase();
     }
 
     closest(selector) {
@@ -34,6 +57,18 @@ class Dom {
         return this.$el.getBoundingClientRect();
     }
 
+    focus() {
+        this.$el.focus();
+
+        return this;
+    }
+
+    find(selector) {
+        const element = this.$el.querySelector(selector);
+
+        return $(element);
+    }
+
     findAll(selector) {
         const elements = Array.from(this.$el.querySelectorAll(selector));
 
@@ -41,9 +76,7 @@ class Dom {
     }
 
     toggleClass(classList, add = true) {
-        const action = add ? 'add' : 'remove';
-
-        this.$el.classList[action](classList);
+        this.$el.classList[add ? 'add' : 'remove'](classList);
     }
 
     /**
