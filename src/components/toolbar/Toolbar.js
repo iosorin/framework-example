@@ -3,13 +3,10 @@ import { ExcelComponent } from '@/core/ExcelComponent';
 export class Toolbar extends ExcelComponent {
     static className = 'excel__toolbar';
 
-    constructor($root) {
-        const name = 'Toolbar';
-        const listeners = [];
-
+    constructor($root, options) {
         super($root, {
-            name,
-            listeners
+            name: 'Toolbar',
+            ...options
         });
     }
 

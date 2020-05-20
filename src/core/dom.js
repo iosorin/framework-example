@@ -41,6 +41,12 @@ class Dom {
         return this;
     }
 
+    text(text) {
+        this.$el.textContent = text;
+
+        return this;
+    }
+
     is(selector) {
         if (selector) {
             return this.$el.classList.contains(selector.replace('.', ''));

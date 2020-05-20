@@ -5,6 +5,7 @@ export class ExcelComponent extends DomListener {
         super($root, options.listeners);
 
         this.name = options.name || '';
+        this.observer = options.observer;
 
         this.onBeforeInit?.();
     }

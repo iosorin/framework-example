@@ -10,13 +10,14 @@ import { TableSelection } from './TableSelection';
 export class Table extends ExcelComponent {
     static className = 'excel__table';
 
-    constructor($root) {
+    constructor($root, options) {
         const name = 'Table';
         const listeners = ['mousedown', 'keydown'];
 
         super($root, {
             name,
-            listeners
+            listeners,
+            ...options
         });
     }
 
@@ -29,6 +30,10 @@ export class Table extends ExcelComponent {
 
         const $cell = this.$root.find('.cell[data-id="0:0"]');
         this.selection.select($cell);
+
+        this.observer.on('observer-test', (data) => {
+            this.selection.current.text(data);
+        });
     }
 
     toHtml() {
