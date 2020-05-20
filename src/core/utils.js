@@ -19,7 +19,16 @@ function storage(key, data = null) {
     return JSON.parse(localStorage.getItem(key));
 }
 
+function isEqual(a, b) {
+    if (typeof a === 'object' && b === 'object') {
+        return JSON.stringify(a) === JSON.stringify(b);
+    }
+
+    return a === b;
+}
+
 export {
     capitalize,
-    storage
+    storage,
+    isEqual
 };

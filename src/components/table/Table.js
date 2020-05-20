@@ -30,11 +30,6 @@ export class Table extends ExcelComponent {
     init() {
         super.init();
 
-        this.subscribe();
-        this.selectCell(this.$root.find('.cell[data-id="0:0"]'));
-    }
-
-    subscribe() {
         // Events
         this.$on('formula:input', (text) => {
             this.selection.current.text(text); // visual update
@@ -44,6 +39,8 @@ export class Table extends ExcelComponent {
         this.$on('formula:done', () => {
             this.selection.current.focus();
         });
+
+        this.selectCell(this.$root.find('.cell[data-id="0:0"]'));
     }
 
     selectCell($el) {

@@ -46,7 +46,6 @@ export const resize = ($root, e) => {
                 $parent.css({ height: value + 'px' });
             }
 
-            console.log($parent.data[type], value);
             resolve({
                 id: $parent.data[type],
                 value,

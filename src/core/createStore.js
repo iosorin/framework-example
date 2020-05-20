@@ -1,4 +1,4 @@
-// Тоже observer
+// Тоже observer, прямо как events Emitter, но работает со стором
 // Функциональный подход из-за замыкания и приватных переменных в верхнем скоупе
 export function createStore(rootReducer, initialState = {}) {
     let state = rootReducer({ ...initialState }, { type: '__INIT__' });
@@ -22,10 +22,7 @@ export function createStore(rootReducer, initialState = {}) {
         },
 
         getState() {
-            return state;
+            return JSON.parse(JSON.stringify(state));
         }
     };
 }
-
-
-// Extra task - переписать на класс
