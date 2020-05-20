@@ -12,7 +12,7 @@ export class Table extends ExcelComponent {
 
     constructor($root, options) {
         const name = 'Table';
-        const listeners = ['mousedown', 'keydown'];
+        const listeners = ['mousedown', 'keydown', 'input'];
 
         super($root, {
             name,
@@ -28,16 +28,44 @@ export class Table extends ExcelComponent {
     init() {
         super.init();
 
-        const $cell = this.$root.find('.cell[data-id="0:0"]');
-        this.selection.select($cell);
+        this.listenEvents();
+        this.selectCell(this.$root.find('.cell[data-id="0:0"]'));
+    }
 
-        this.observer.on('observer-test', (data) => {
+
+    listenEvents() {
+        this.$on('formula:input', (data) => {
             this.selection.current.text(data);
+        });
+
+        this.$on('formula:done', () => {
+            this.selection.current.focus();
         });
     }
 
-    toHtml() {
-        return create(20);
+    selectCell($el) {
+        this.selection.select($el);
+
+        this.$emit('table:select', $el.text());
+    }
+
+    onMousedown(e) {
+        if (utils.shouldResize(e)) {
+            resize(this.$root, e);
+        }
+        else if (utils.isCell(e)) {
+            const $target = $(e.target);
+
+            if (e.shiftKey) {
+                const ids = utils.matrix($target, this.selection.current);
+                const $cells = ids.map(id => this.$root.find(`[data-id="${id}"]`));
+
+                this.selection.selectGroup($cells);
+            }
+            else {
+                this.selection.select($target);
+            }
+        }
     }
 
     onKeydown(e) {
@@ -60,26 +88,15 @@ export class Table extends ExcelComponent {
 
             const $next = this.$root.find(newId);
 
-            this.selection.select($next);
+            this.selectCell($next);
         }
     }
 
-    onMousedown(e) {
-        if (utils.shouldResize(e)) {
-            resize(this.$root, e);
-        }
-        else if (utils.isCell(e)) {
-            const $target = $(e.target);
+    onInput(e) {
+        this.$emit('table:input', $(e.target).text());
+    }
 
-            if (e.shiftKey) {
-                const ids = utils.matrix($target, this.selection.current);
-                const $cells = ids.map(id => this.$root.find(`[data-id="${id}"]`));
-
-                this.selection.selectGroup($cells);
-            }
-            else {
-                this.selection.select($target);
-            }
-        }
+    toHtml() {
+        return create(20);
     }
 }

@@ -1,11 +1,11 @@
 import { $ } from '@core/dom';
-import { Observer } from '@core/Observer';
+import { Emmiter } from '@core/Emmiter';
 
 export class Excel {
     constructor(selector, options) {
         this.$el = $(selector);
 
-        this.observer = new Observer();
+        this.emmiter = new Emmiter();
         this.components = options.components || [];
     }
 
@@ -15,7 +15,7 @@ export class Excel {
 
         // Component options
         const options = {
-            observer: this.observer
+            emmiter: this.emmiter
         };
 
         // Waklhrough all passed components
@@ -23,7 +23,7 @@ export class Excel {
             // Create El instance with a passed static className
             const $el = $.create('div', Component.className);
 
-            // Pass it to DomListener constructor
+            // Pass it to DomListener, ExcelComponent constructors
             const component = new Component($el, options);
 
             // Append component inner html
@@ -44,5 +44,9 @@ export class Excel {
         this.$el.append($root);
 
         this.components.forEach(component => component.init());
+    }
+
+    destroy() {
+        this.components.forEach(component => component.destroy());
     }
 }

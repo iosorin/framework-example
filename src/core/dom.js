@@ -42,9 +42,19 @@ class Dom {
     }
 
     text(text) {
-        this.$el.textContent = text;
+        // Setter
+        if (typeof text === 'string') {
+            this.$el.textContent = text;
 
-        return this;
+            return this;
+        }
+
+        // Getters
+        if (this.$el.tagName.toLowerCase() === 'input') {
+            return this.$el.value.trim();
+        }
+
+        return this.$el.textContent.trim();
     }
 
     is(selector) {

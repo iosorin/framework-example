@@ -1,5 +1,9 @@
 import { capitalize } from '@core/utils';
 
+const getMethodName = (eventName) => {
+    return `on${ capitalize(eventName) }`;
+};
+
 export class DomListener {
     constructor($root, listeners = []) {
         if (!$root) {
@@ -41,8 +45,4 @@ export class DomListener {
             this.$root.off(listener, this[method]);
         });
     }
-}
-
-function getMethodName(eventName) {
-    return `on${ capitalize(eventName) }`;
 }

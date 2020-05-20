@@ -1,5 +1,3 @@
-import { $ } from '@core/dom';
-
 export class TableSelection {
     static selectedClass = 'selected';
 

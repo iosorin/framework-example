@@ -1,4 +1,4 @@
-export class Observer {
+export class Emmiter {
     constructor() {
         this.listeners = {};
     }
@@ -27,23 +27,3 @@ export class Observer {
         };
     }
 }
-
-// Example
-// const observer = new Observer();
-
-// // Return ubsubscribe callback
-// const unsubscribe = observer.on('my-event', data => console.log(data));
-
-// setTimeout(() => {
-//     observer.emit('my-event', 'after 1 second');
-// }, 1000);
-
-// setTimeout(() => {
-//     observer.emit('my-event', 'after 2 second');
-
-//     unsubscribe();
-// }, 2000);
-
-// setTimeout(() => {
-//     observer.emit('my-event', 'after 3 second');
-// }, 3000);
