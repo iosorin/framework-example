@@ -35,6 +35,16 @@ class Dom {
         return id;
     }
 
+    attr(name, value) {
+        if (value !== undefined) {
+            this.$el.setAttribute(name, value);
+
+            return this;
+        }
+
+        return this.$el.getAttribute(name);
+    }
+
     clear() {
         this.html('');
 
@@ -43,7 +53,7 @@ class Dom {
 
     text(text) {
         // Setter
-        if (typeof text === 'string') {
+        if (typeof text !== 'undefined') {
             this.$el.textContent = text;
 
             return this;

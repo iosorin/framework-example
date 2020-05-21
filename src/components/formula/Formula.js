@@ -24,8 +24,8 @@ export class Formula extends ExcelComponent {
 
         this.$formula = this.$root.find('#formula');
 
-        this.$on('table:select', (text) => {
-            this.$formula.text(text);
+        this.$on('table:select', ($cell) => {
+            this.$formula.text($cell.data.value);
         });
 
         this.$on('table:input', (text) => {
@@ -33,8 +33,8 @@ export class Formula extends ExcelComponent {
         });
     }
 
-    storeChanged(currentText) {
-        this.$formula.text(currentText);
+    storeChanged(data) {
+        this.$formula.text(data.currentText);
     }
 
     onInput(e) {

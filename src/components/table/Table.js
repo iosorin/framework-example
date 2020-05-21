@@ -1,6 +1,7 @@
 import { $ } from '@core/dom';
 
 import { ExcelComponent } from '@core/ExcelComponent';
+import { parse } from '@core/parse';
 import { TableSelection } from './TableSelection';
 
 import { utils } from './composition/table.utils';
@@ -31,9 +32,12 @@ export class Table extends ExcelComponent {
     init() {
         super.init();
 
-        this.$on('formula:input', (text) => {
-            this.selection.current.text(text); // visual update
-            this.updateTextInStore(text); // store update
+        this.$on('formula:input', (value) => {
+            this.selection.current
+                .attr('data-value', value)
+                .text(parse(value));
+
+            this.updateTextInStore(value); // store update
         });
 
         this.$on('formula:done', () => {
@@ -57,7 +61,7 @@ export class Table extends ExcelComponent {
     selectCell($cell) {
         this.selection.select($cell);
 
-        this.$emit('table:select', $cell.text());
+        this.$emit('table:select', $cell);
 
         const styles = $cell.getStyle(Object.keys(defaultStyles), defaultStyles);
 
