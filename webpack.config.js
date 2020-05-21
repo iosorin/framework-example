@@ -1,8 +1,12 @@
 const path = require('path');
+const webpack = require('webpack');
+
+// plugins
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const DefinePlugin = webpack.DefinePlugin;
 
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = !isProd;
@@ -60,12 +64,15 @@ module.exports = {
         }),
         new CopyPlugin([
             {
-                from: path.relative(__dirname, 'src/favicon.ico'),
+                from: path.relative(__dirname, 'favicon.ico'),
                 to: path.relative(__dirname, 'dist')
             }
         ]),
         new MiniCssExtractPlugin({
             filename: filename('css')
+        }),
+        new DefinePlugin({
+            'process.environment': JSON.stringify(process.env.NODE_ENV)
         })
     ],
     module: {

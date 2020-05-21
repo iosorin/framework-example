@@ -61,11 +61,16 @@ function clone(obj) {
     return JSON.parse(JSON.stringify(obj));
 }
 
+function preventDefault(e) {
+    e.preventDefault();
+}
+
 export {
     debounce,
     capitalize,
     storage,
     isEqual,
     toInlineStyles,
-    clone
+    clone,
+    preventDefault
 };
