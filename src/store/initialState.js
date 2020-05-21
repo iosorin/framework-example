@@ -1,8 +1,8 @@
 import { storage } from '@core/utils';
-import { defaultStyles } from '../constants';
+import { defaultStyles, defaultTitle } from '../constants';
 
 const defaultState = {
-    title: 'Новая Таблица',
+    title: defaultTitle,
     rowState: {},
     colState: {},
     dataState: {},
@@ -19,7 +19,10 @@ const normalize = state => ({
 });
 
 const storageState = storage('App-State');
-const initialState = storageState ? storageState : normalize;
+const initialState = storageState ?
+    normalize(storageState) :
+    defaultState;
+
 
 export {
     initialState

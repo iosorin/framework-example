@@ -15,6 +15,8 @@ import { storage, debounce } from '@core/utils';
 import { rootReducer } from '@store/rootReducer';
 import { initialState } from '@store/initialState';
 
+
+// Create debounced store.state listener
 const store = createStore(rootReducer, initialState);
 
 const stateListener = debounce((state) => {
@@ -22,7 +24,6 @@ const stateListener = debounce((state) => {
 }, 300);
 
 store.subscribe(stateListener);
-
 
 const excelApp = new Excel('#app', {
     store,
