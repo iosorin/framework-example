@@ -1,6 +1,7 @@
 import { $ } from '@core/dom';
 import { Emmiter } from '@core/Emmiter';
-import { StoreSubscriber } from '@core/StoreSubscriber';
+
+import { StoreSubscriber } from '@core/store/StoreSubscriber';
 import { preventDefault } from '@core/utils';
 import { updateDate } from '@store/actions';
 
