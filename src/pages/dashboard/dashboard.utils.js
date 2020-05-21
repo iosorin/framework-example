@@ -1,19 +1,20 @@
-function getFormattedDate(tms) {
-    tms = parseInt(tms);
+import { storage } from '@core/utils';
 
-    const dateISO = new Date(tms).toISOString();
 
-    return dateISO.split('T')[0];
-}
+function toHtml(key, index) {
+    const model = storage(key);
 
-function toTableItem(key, index) {
-    const [_, id] = key.split(':');
-    const date = getFormattedDate(id);
+    const id = key.split(':')[1];
+    const date = new Date(model.updateDate);
 
     return `
         <li class="db__record">
-            <a href="#excel/${ id }">Таблица номер ${ index + 1 }</a>
-            <strong>${ date }</strong>
+            <a href="#excel/${ id }">${ model.title }</a>
+
+            <strong>
+                ${ date.toLocaleDateString() }
+                (${ date.toLocaleTimeString() })
+            </strong>
         </li>
     `;
 }
@@ -50,7 +51,7 @@ function createRecordsTable() {
         </div>
 
         <ul class="db__list">
-            ${ keys.map(toTableItem).join('') }
+            ${ keys.map(toHtml).join('') }
         </ul>
     `;
 

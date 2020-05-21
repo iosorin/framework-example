@@ -4,7 +4,8 @@ import {
     TABLE_RESIZE,
     CHANGE_TEXT,
     CHANGE_STYLES,
-    APPLY_STYLES
+    APPLY_STYLES,
+    UPDATE_DATE
 } from './types';
 
 
@@ -58,12 +59,16 @@ export function rootReducer(state, action) {
                 [field]: val
             };
 
+        case UPDATE_DATE:
+            return {
+                ...state,
+                updateDate: new Date().toJSON()
+            };
 
         default:
             return { ...state };
     }
 }
-
 
 function value(state, field, action) {
     const val = state[field] || {};
