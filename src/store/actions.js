@@ -1,27 +1,34 @@
-import { CHANGE_TITLE, TABLE_RESIZE, CHANGE_TEXT, CHANGE_STYLES, APPLY_STYLES } from './types';
+import {
+    CHANGE_TITLE,
+    TABLE_RESIZE,
+    CHANGE_TEXT,
+    CHANGE_STYLES,
+    APPLY_STYLES,
+    UPDATE_DATE
+} from './types';
 
-export function changeTitle(title) {
+function changeTitle(title) {
     return {
         type: CHANGE_TITLE,
         data: title
     };
 }
 
-export function tableResize(data) {
+function tableResize(data) {
     return {
         type: TABLE_RESIZE,
         data
     };
 }
 
-export function changeText(text) {
+function changeText(text) {
     return {
         type: CHANGE_TEXT,
         data: text
     };
 }
 
-export function changeStyles(data) {
+function changeStyles(data) {
     return {
         type: CHANGE_STYLES,
         data // styles
@@ -29,9 +36,24 @@ export function changeStyles(data) {
 }
 
 
-export function applyStyles(data) {
+function applyStyles(data) {
     return {
         type: APPLY_STYLES,
         data // // value ids
     };
 }
+
+function updateDate() {
+    return {
+        type: UPDATE_DATE
+    };
+}
+
+export {
+    changeTitle,
+    tableResize,
+    changeText,
+    changeStyles,
+    applyStyles,
+    updateDate
+};

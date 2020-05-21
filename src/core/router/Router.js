@@ -44,7 +44,6 @@ export class Router {
         this.page.afterRender();
     }
 
-
     destroy() {
         window.removeEventListener('hashchange', this.changePage);
     }
