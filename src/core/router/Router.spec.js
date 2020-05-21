@@ -1,4 +1,4 @@
-import { Page } from '../Page';
+import { Page } from '../page/Page';
 import { Router } from './Router';
 
 const createDiv = (innerText = '') => {
@@ -42,7 +42,7 @@ describe('Router', () => {
         expect($root.innerHTML).toBe('<div>Dashboard</div>');
     });
 
-    test('should render Excel page after calling changePage method with argument', () => {
+    test('should render Excel page after calling changePage method with an a argument', () => {
         router.changePage('excel');
 
         expect($root.innerHTML).toBe('<div>Excel</div>');
