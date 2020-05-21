@@ -3,20 +3,16 @@ import { Emmiter } from '@core/Emmiter';
 import { StoreSubscriber } from '../../core/StoreSubscriber';
 
 export class Excel {
-    constructor(selector, options) {
-        this.$el = $(selector);
-
+    constructor(options) {
         this.components = options.components || [];
-
         this.store = options.store;
         this.subscriber = new StoreSubscriber(this.store);
-
         this.emmiter = new Emmiter();
     }
 
     getRoot() {
         // Create root Dom instancte
-        const $root = $.create('div', 'excel');
+        const $pageRoot = $.create('div', 'excel');
 
         // Component options
         const options = {
@@ -26,29 +22,19 @@ export class Excel {
 
         // Waklhrough all passed components
         this.components = this.components.map((Component) => {
-            // Create El instance with a passed static className
-            const $el = $.create('div', Component.className);
+            const $componentRoot = $.create('div', Component.className);
+            const component = new Component($componentRoot, options);
 
-            // Pass it to DomListener, ExcelComponent constructors
-            const component = new Component($el, options);
-
-            // Append component inner html
-            $el.html(component.toHtml());
-
-            // Add self to root element
-            $root.append($el);
+            $componentRoot.html(component.toHtml());
+            $pageRoot.append($componentRoot);
 
             return component;
         });
 
-        return $root;
+        return $pageRoot;
     }
 
-    render() {
-        const $root = this.getRoot();
-
-        this.$el.append($root);
-
+    init() {
         this.subscriber.subscribeComponents(this.components);
         this.components.forEach(component => component.init());
     }

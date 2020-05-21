@@ -1,5 +1,7 @@
+import { clone } from '@core/utils';
+
 // Тоже observer, прямо как events Emitter, но работает со стором
-// Функциональный подход из-за замыкания и приватных переменных в верхнем скоупе
+// Функциональный подход ради приватных переменных в верхнем скоупе
 export function createStore(rootReducer, initialState = {}) {
     let state = rootReducer({ ...initialState }, { type: '__INIT__' });
     let listeners = [];
@@ -22,7 +24,7 @@ export function createStore(rootReducer, initialState = {}) {
         },
 
         getState() {
-            return JSON.parse(JSON.stringify(state));
+            return clone(state);
         }
     };
 }

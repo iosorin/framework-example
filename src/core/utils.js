@@ -57,10 +57,15 @@ function debounce(fn, wait) {
     };
 }
 
+function clone(obj) {
+    return JSON.parse(JSON.stringify(obj));
+}
+
 export {
     debounce,
     capitalize,
     storage,
     isEqual,
-    toInlineStyles
+    toInlineStyles,
+    clone
 };
