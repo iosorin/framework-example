@@ -8,8 +8,8 @@ import { Table } from '@/components/table/Table';
 import { Toolbar } from '@/components/toolbar/Toolbar';
 
 // @core
-import { storage } from '@core/utils';
 import { createStore } from '@core/createStore';
+import { storage, debounce } from '@core/utils';
 
 // @store
 import { rootReducer } from '@store/rootReducer';
@@ -17,9 +17,12 @@ import { initialState } from '@store/initialState';
 
 const store = createStore(rootReducer, initialState);
 
-store.subscribe((state) => {
+const stateListener = debounce((state) => {
     storage('App-State', state);
-});
+}, 300);
+
+store.subscribe(stateListener);
+
 
 const excelApp = new Excel('#app', {
     store,

@@ -33,8 +33,8 @@ export class Formula extends ExcelComponent {
         });
     }
 
-    storeChanged(data) {
-        console.log('FORMULA STORE CHANGES', data);
+    storeChanged(currentText) {
+        this.$formula.text(currentText);
     }
 
     onInput(e) {
