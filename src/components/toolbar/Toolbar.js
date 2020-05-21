@@ -10,10 +10,12 @@ export class Toolbar extends ExcelStateComponent {
     constructor($root, options) {
         const name = 'Toolbar';
         const listeners = ['click'];
+        const storeSubscribes = ['currentStyles'];
 
         super($root, {
             name,
             listeners,
+            storeSubscribes,
             ...options
         });
     }
@@ -22,12 +24,12 @@ export class Toolbar extends ExcelStateComponent {
         return create(this.state);
     }
 
-    toHtml() {
-        return this.template;
-    }
-
     onBeforeInit() {
         this.initState(defaultStyles);
+    }
+
+    storeChanged(data) {
+        this.setState(data.currentStyles);
     }
 
     onClick(e) {
@@ -36,12 +38,11 @@ export class Toolbar extends ExcelStateComponent {
         if ($target.data.value) {
             const style = JSON.parse($target.data.value);
 
-            const key = Object.keys(style)[0];
-            const value = style[key];
-
-            this.$emit('toolbar:applyStyle', { key, value });
-
-            this.setState({ [key]: value });
+            this.$emit('toolbar:applyStyle', style);
         }
+    }
+
+    toHtml() {
+        return this.template;
     }
 }

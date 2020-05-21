@@ -1,13 +1,18 @@
-import { TABLE_RESIZE, CHANGE_TEXT, CHANGE_TITLE } from './types';
+import { CHANGE_TITLE, TABLE_RESIZE, CHANGE_TEXT, CHANGE_STYLES, APPLY_STYLES } from './types';
 
-// Action Creator
+export function changeTitle(title) {
+    return {
+        type: CHANGE_TITLE,
+        data: title
+    };
+}
+
 export function tableResize(data) {
     return {
         type: TABLE_RESIZE,
         data
     };
 }
-
 
 export function changeText(text) {
     return {
@@ -16,9 +21,17 @@ export function changeText(text) {
     };
 }
 
-export function changeTitle(title) {
+export function changeStyles(data) {
     return {
-        type: CHANGE_TITLE,
-        data: title
+        type: CHANGE_STYLES,
+        data // styles
+    };
+}
+
+
+export function applyStyles(data) {
+    return {
+        type: APPLY_STYLES,
+        data // // value ids
     };
 }
