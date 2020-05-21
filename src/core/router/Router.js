@@ -1,4 +1,4 @@
-import { $ } from '@core/dom';
+import { $ } from '../dom';
 import { ActiveRoute } from './ActiveRoute';
 
 export class Router {
@@ -26,16 +26,20 @@ export class Router {
         window.addEventListener('hashchange', this.changePage);
     }
 
-    changePage() {
+    changePage(page = null) {
         if (this.page) {
             this.page.destroy();
         }
 
         this.$placeholder.clear();
 
-        const Page = ActiveRoute.path.includes('excel') ?
+        let Page = ActiveRoute.path.includes('excel') ?
             this.routes.excel :
             this.routes.dashboard;
+
+        if (page && this.routes[page]) {
+            Page = this.routes[page];
+        }
 
         this.page = new Page(ActiveRoute.param);
 
