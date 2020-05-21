@@ -29,6 +29,10 @@ export class StoreSubscriber {
                 });
 
             this.prevState = this.store.getState();
+
+            if (process.environment === 'development') {
+                window.storeState = this.prevState;
+            }
         });
     }
 

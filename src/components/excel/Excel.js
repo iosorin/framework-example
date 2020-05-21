@@ -1,6 +1,7 @@
 import { $ } from '@core/dom';
 import { Emmiter } from '@core/Emmiter';
 import { StoreSubscriber } from '@core/StoreSubscriber';
+import { preventDefault } from '@core/utils';
 import { updateDate } from '@store/actions';
 
 export class Excel {
@@ -36,6 +37,10 @@ export class Excel {
     }
 
     init() {
+        if (process.environment === 'production') {
+            document.addEventListener('contextmenu', preventDefault);
+        }
+
         this.store.dispatch(updateDate());
 
         this.subscriber.subscribeComponents(this.components);
@@ -43,6 +48,10 @@ export class Excel {
     }
 
     destroy() {
+        if (process.environment === 'production') {
+            document.removeEventListener('contextmenu', preventDefault);
+        }
+
         this.subscriber.unsubscribeFromStore();
         this.components.forEach(component => component.destroy());
     }
