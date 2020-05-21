@@ -1,4 +1,4 @@
-import { clone } from '@core/utils';
+import { clone } from '../utils';
 
 // Тоже observer, прямо как events Emitter, но работает со стором
 // Функциональный подход ради приватных переменных в верхнем скоупе
